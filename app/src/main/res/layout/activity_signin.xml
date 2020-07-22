@@ -16,6 +16,8 @@
         android:layout_marginEnd="36dp"
         android:layout_marginBottom="245dp"
         android:text="Button"
+        android:background="@color/white"
+        android:textColor="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
