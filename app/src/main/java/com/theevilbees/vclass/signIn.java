@@ -23,6 +23,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.util.Objects;
+
 
 public class signIn extends AppCompatActivity implements View.OnClickListener {
 
@@ -83,6 +85,10 @@ public class signIn extends AppCompatActivity implements View.OnClickListener {
             }
         }
     }
+    int getType()
+    {
+        return 0;
+    }
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
@@ -93,8 +99,30 @@ public class signIn extends AppCompatActivity implements View.OnClickListener {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("signin", "signInWithCredential:success");
                             // FirebaseUser user = mAuth.getCurrentUser();
-                            Intent i=new Intent(getApplicationContext(),teacher.class);
+                            boolean isNew = Objects.requireNonNull(task.getResult()).getAdditionalUserInfo().isNewUser();
+                           Intent i;
+                            if(isNew)
+                            {
+                               i= new Intent(getApplicationContext(),details.class);
+                            }
+                            else
+                            {
+                                if(getType()==-1)
+                                {
+                                    i=new Intent(getApplicationContext(),details.class);
+                                }
+                                else if(getType()==1)
+                                {
+                                    i= new Intent(getApplicationContext(),student.class);
+                                }
+                                else
+                                {
+                                    i= new Intent(getApplicationContext(),teacher.class);
+                                }
+                            }
+
                             startActivity(i);
+                            finish();
 
                         } else {
                             // If sign in fails, display a message to the user.
